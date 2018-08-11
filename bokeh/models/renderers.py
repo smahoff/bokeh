@@ -40,6 +40,16 @@ class DataRenderer(Renderer):
 
     '''
 
+    x_range_name = String('default', help="""
+    A particular (named) x-range to use for computing screen locations when
+    rendering glyphs on the plot. If unset, use the default x-range.
+    """)
+
+    y_range_name = String('default', help="""
+    A particular (named) y-range to use for computing screen locations when
+    rendering glyphs on the plot. If unset, use the default y-range.
+    """)
+
 class TileRenderer(DataRenderer):
     '''
 
@@ -55,18 +65,6 @@ class TileRenderer(DataRenderer):
 
     smoothing = Bool(default=True, help="""
     Enable image smoothing for the rendered tiles.
-    """)
-
-    x_range_name = String('default', help="""
-    A particular (named) x-range to use for computing screen
-    locations when rendering glyphs on the plot. If unset, use the
-    default x-range.
-    """)
-
-    y_range_name = String('default', help="""
-    A particular (named) y-range to use for computing screen
-    locations when rendering glyphs on the plot. If unset, use the
-    default y-range.
     """)
 
     level = Override(default="underlay")
@@ -121,18 +119,6 @@ class GlyphRenderer(DataRenderer):
     A view into the data source to use when rendering glyphs. A default view
     of the entire data source is created when a view is not passed in during
     initialization.
-    """)
-
-    x_range_name = String('default', help="""
-    A particular (named) x-range to use for computing screen
-    locations when rendering glyphs on the plot. If unset, use the
-    default x-range.
-    """)
-
-    y_range_name = String('default', help="""
-    A particular (named) y-range to use for computing screen
-    locations when rendering glyphs on the plot. If unset, use the
-    default y-range.
     """)
 
     glyph = Instance(Glyph, help="""
@@ -193,18 +179,6 @@ class GraphRenderer(DataRenderer):
             missing.append("Column 'end' is missing in GraphSource.edge_renderer.data_source")
         if missing:
             return " ,".join(missing) + " [%s]" % self
-
-    x_range_name = String('default', help="""
-    A particular (named) x-range to use for computing screen
-    locations when rendering graphs on the plot. If unset, use the
-    default x-range.
-    """)
-
-    y_range_name = String('default', help="""
-    A particular (named) y-range to use for computing screen
-    locations when rendering graphs on the plot. If unset, use the
-    default y-range.
-    """)
 
     layout_provider = Instance(LayoutProvider, help="""
     An instance of a LayoutProvider that supplies the layout of the network
