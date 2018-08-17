@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 from ..core.enums import SizingMode, Location
 from ..core.has_props import abstract
-from ..core.properties import Bool, Enum, Int, Instance, List, Seq, String, Either
+from ..core.properties import Bool, Enum, Int, Float, Instance, List, Seq, Tuple, String, Either
 from ..core.validation import warning
 from ..core.validation.warnings import BOTH_CHILD_AND_ROOT, EMPTY_LAYOUT
 from ..model import Model
@@ -25,6 +25,10 @@ class LayoutDOM(Model):
     the widget will be greyed-out, and not respond to UI events.
     """)
 
+    visible = Bool(True, help="""
+    Whether the widget will be visible and a part of a layout.
+    """)
+
     width = Int(default=None, help="""
     An optional width for the component (in pixels).
     """)
@@ -33,40 +37,34 @@ class LayoutDOM(Model):
     An optional height for the component (in pixels).
     """)
 
-    #                                     fit  strech
     width_policy = Enum("auto", "fixed", "min", "max", default="auto", help="""
     """)
 
     height_policy = Enum("auto", "fixed", "min", "max", default="auto", help="""
     """)
 
-    aspect_ratio = Either(Enum("auto"), Int, default=None, help="""
+    aspect_ratio = Either(Enum("auto"), Float, default=None, help="""
 
     """)
 
-    sizing_mode = Enum(SizingMode, default="fixed", help="""
-    How the item being displayed should size itself. Possible values are
-    ``"fixed"``, ``"scale_width"``, ``"scale_height"``, ``"scale_both"``, and
-    ``"stretch_both"``.
-
-    ``"stretch_both"`` elements are completely responsive (independently in width and height) and
-    will resize to occupy all available space, even if this changes the aspect ratio of the element.
-    This is sometimes called outside-in, and is a typical behavior for desktop applications.
+    sizing_mode = Enum(SizingMode, default=None, help="""
+    How the item being displayed should size itself. Possible values are ``"fixed"``,
+    ``"scale_width"``, ``"scale_height"``, ``"scale_both"``, and ``"stretch_both"``.
 
     ``"fixed"`` elements are not responsive. They will retain their original width and height
     regardless of any subsequent browser window resize events.
 
-    ``"scale_width"`` elements will responsively resize to fit to the width available, *while
-    maintaining the original aspect ratio*. This is a typical behavior for modern websites. For a
-    ``Plot``, the aspect ratio ``plot_width/plot_height`` is maintained.
+    ``"stretch_both"`` elements are completely responsive (independently in width and height) and
+    will resize to occupy all available space, even if this changes the aspect ratio of the layout.
 
-    ``"scale_height"`` elements will responsively resize to fit to the height available, *while
-    maintaining the original aspect ratio*. For a ``Plot``, the aspect ratio
-    ``plot_width/plot_height`` is maintained. A plot with ``"scale_height"`` mode needs
-    to be wrapped in a ``Row`` or ``Column`` to be responsive.
+    ``"scale_width"`` elements will responsively resize to stretch to the available width, *while
+    maintaining the original or provided aspect ratio*.
+
+    ``"scale_height"`` elements will responsively resize to stretch to the available height, *while
+    maintaining the original or provided aspect ratio*.
 
     ``"scale_both"`` elements will responsively resize to for both the width and height available,
-    *while maintaining the original aspect ratio*.
+    *while maintaining the original or provided aspect ratio*.
 
     """)
 
@@ -84,6 +82,12 @@ class Spacer(LayoutDOM):
     ''' A container for space used to fill an empty spot in a row or column.
 
     '''
+
+
+class GridBox(LayoutDOM):
+
+    children = List(Tuple(Instance(LayoutDOM), Int, Int), default=[], help="""
+    """)
 
 
 @abstract
