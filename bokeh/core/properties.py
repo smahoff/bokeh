@@ -99,6 +99,7 @@ Basic Properties
 .. autoclass:: Regex
 .. autoclass:: Size
 .. autoclass:: String
+.. autoclass:: Struct
 .. autoclass:: TimeDelta
 
 Container Properties
@@ -223,6 +224,7 @@ __all__ = (
     'Size',
     'String',
     'StringSpec',
+    'Struct',
     'TimeDelta',
     'Tuple',
     'UnitsSpec',
@@ -297,6 +299,8 @@ from .property.primitive import Float; Float
 from .property.primitive import String; String
 
 from .property.regex import Regex; Regex
+
+from .property.struct import Struct; Struct
 
 from .property.visual import DashPattern; DashPattern
 from .property.visual import FontSize; FontSize

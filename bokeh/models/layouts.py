@@ -6,9 +6,9 @@ from __future__ import absolute_import
 import logging
 logger = logging.getLogger(__name__)
 
-from ..core.enums import SizingMode, Location
+from ..core.enums import SizingMode, SizingPolicy, Location, TrackAlign
 from ..core.has_props import abstract
-from ..core.properties import Bool, Enum, Int, Float, Instance, List, Seq, Tuple, String, Either
+from ..core.properties import Bool, Enum, Int, Float, Instance, List, Seq, Tuple, Dict, String, Either, Struct
 from ..core.validation import warning
 from ..core.validation.warnings import BOTH_CHILD_AND_ROOT, EMPTY_LAYOUT
 from ..model import Model
@@ -37,10 +37,10 @@ class LayoutDOM(Model):
     An optional height for the component (in pixels).
     """)
 
-    width_policy = Enum("auto", "fixed", "min", "max", default="auto", help="""
+    width_policy = Enum(SizingPolicy, default="auto", help="""
     """)
 
-    height_policy = Enum("auto", "fixed", "min", "max", default="auto", help="""
+    height_policy = Enum(SizingPolicy, default="auto", help="""
     """)
 
     aspect_ratio = Either(Enum("auto"), Float, default=None, help="""
@@ -83,12 +83,30 @@ class Spacer(LayoutDOM):
 
     '''
 
+RowSizing = Either(
+    Enum("auto", "min", "max"),
+    Int,
+    Struct(policy=Enum("auto", "min", "max"), align=Enum(TrackAlign)),
+    Struct(policy=Enum("fixed"), height=Int, align=Enum(TrackAlign)),
+    Struct(policy=Enum("flex"), factor=Float, align=Enum(TrackAlign)))
+
+ColSizing = Either(
+    Enum("auto", "min", "max"),
+    Int,
+    Struct(policy=Enum("auto", "min", "max"), align=Enum(TrackAlign)),
+    Struct(policy=Enum("fixed"), width=Int, align=Enum(TrackAlign)),
+    Struct(policy=Enum("flex"), factor=Float, align=Enum(TrackAlign)))
 
 class GridBox(LayoutDOM):
 
     children = List(Tuple(Instance(LayoutDOM), Int, Int), default=[], help="""
     """)
 
+    rows = Dict(Int, RowSizing, default={}, help="""
+    """)
+
+    cols = Dict(Int, ColSizing, default={}, help="""
+    """)
 
 @abstract
 class Box(LayoutDOM):
@@ -134,6 +152,8 @@ class Row(Box):
     that is a sequence, or using the ``children`` keyword argument.
     '''
 
+    cols = Dict(Int, ColSizing, default={}, help="""
+    """)
 
 class Column(Box):
     ''' Lay out child components in a single vertical row.
@@ -141,6 +161,9 @@ class Column(Box):
     Children can be specified as positional arguments, as a single argument
     that is a sequence, or using the ``children`` keyword argument.
     '''
+
+    rows = Dict(Int, RowSizing, default={}, help="""
+    """)
 
 class Panel(Model):
     ''' A single-widget container with title bar and controls.
