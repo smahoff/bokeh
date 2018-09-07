@@ -93,7 +93,6 @@ describe("AxisView", () => {
 
     const axis_view = new axis.default_view({
       model: axis,
-      plot_view: plot_view,
       parent: plot_view,
     }) as AxisView
 
