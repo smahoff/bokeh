@@ -113,15 +113,17 @@ ColSizing = Either(
     Struct(policy=Enum("fixed"), width=Int, align=Enum(TrackAlign)),
     Struct(policy=Enum("flex"), factor=Float, align=Enum(TrackAlign)))
 
+IntOrString = Either(Int, String) # XXX: work around issue #8166
+
 class GridBox(LayoutDOM):
 
     children = List(Tuple(Instance(LayoutDOM), Int, Int), default=[], help="""
     """)
 
-    rows = Dict(Int, RowSizing, default={}, help="""
+    rows = Dict(IntOrString, RowSizing, default={}, help="""
     """)
 
-    cols = Dict(Int, ColSizing, default={}, help="""
+    cols = Dict(IntOrString, ColSizing, default={}, help="""
     """)
 
 @abstract
@@ -168,7 +170,7 @@ class Row(Box):
     that is a sequence, or using the ``children`` keyword argument.
     '''
 
-    cols = Dict(Int, ColSizing, default={}, help="""
+    cols = Dict(IntOrString, ColSizing, default={}, help="""
     """)
 
 class Column(Box):
@@ -178,7 +180,7 @@ class Column(Box):
     that is a sequence, or using the ``children`` keyword argument.
     '''
 
-    rows = Dict(Int, RowSizing, default={}, help="""
+    rows = Dict(IntOrString, RowSizing, default={}, help="""
     """)
 
 class Panel(Model):
