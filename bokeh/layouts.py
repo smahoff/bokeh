@@ -154,6 +154,8 @@ def widgetbox(*args, **kwargs):
     """
     css_classes = kwargs.get("css_classes", [])
     kwargs["css_classes"] = ["bk-widgetbox"] + css_classes
+    kwargs.setdefault("spacing", 5)
+    kwargs.setdefault("rows", "min")
     return column(*args, **kwargs)
 
 
