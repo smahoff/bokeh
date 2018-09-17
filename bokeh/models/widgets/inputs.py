@@ -4,7 +4,7 @@
 from __future__ import absolute_import
 
 from ...core.has_props import abstract
-from ...core.properties import Date, Either, Float, Instance, Int, List, String, Tuple, Dict
+from ...core.properties import Date, Either, Float, Instance, Int, List, String, Tuple, Dict, Override
 
 from ..callbacks import Callback
 
@@ -19,6 +19,10 @@ class InputWidget(Widget):
     title = String(default="", help="""
     Widget's label.
     """)
+
+    width = Override(default=300)
+
+    height_policy = Override(default="min")
 
     @classmethod
     def coerce_value(cls, val):
