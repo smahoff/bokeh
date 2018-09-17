@@ -126,6 +126,9 @@ class GridBox(LayoutDOM):
     cols = Either(QuickTrackSizing, Dict(IntOrString, ColSizing), help="""
     """)
 
+    spacing = Either(Int, Tuple(Int, Int), default=0, help="""
+    """)
+
 @abstract
 class Box(LayoutDOM):
     ''' Abstract base class for Row and Column. Do not use directly.
@@ -160,6 +163,9 @@ class Box(LayoutDOM):
 
     children = List(Instance(LayoutDOM), help="""
     The list of children, which can be other components including plots, rows, columns, and widgets.
+    """)
+
+    spacing = Int(default=0, help="""
     """)
 
 
