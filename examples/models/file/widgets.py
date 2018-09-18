@@ -22,7 +22,7 @@ from bokeh.models.widgets import (
     StringEditor, IntEditor, NumberEditor, SelectEditor,
 )
 from bokeh.plotting import figure
-from bokeh.layouts import widgetbox
+from bokeh.layouts import column
 from bokeh.sampledata.iris import flowers
 from bokeh.sampledata.autompg2 import autompg2 as mpg
 
@@ -109,20 +109,20 @@ table = DataTable(source=source, columns=columns, editable=True, width=800)
 
 widgets = Column(children=[
     Row(children=[
-        widgetbox([
+        column([
             button, toggle, dropdown, #dropdown_split,
             checkbox_group, radio_group,
             checkbox_button_group, radio_button_group,
-        ]),
-        widgetbox([
+        ], spacing=5),
+        column([
             text_input, autocomplete_input,
             select, multi_select,
             slider, range_slider, #date_range_slider,
             date_picker,
             paragraph, div, pre_text,
-        ]),
+        ], spacing=5),
         tabs,
-    ]),
+    ], spacing=10),
     table,
 ])
 
