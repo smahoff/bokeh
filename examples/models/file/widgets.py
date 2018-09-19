@@ -29,10 +29,10 @@ from bokeh.sampledata.autompg2 import autompg2 as mpg
 button = Button(label="Button (disabled) - still has click event", button_type="primary", disabled=True)
 toggle = Toggle(label="Toggle button", button_type="success")
 
-menu = [("Item 1", "item_1_value"), ("Item 2", "item_2_value"), ("Item 3", "item_3_value")]
+menu = [("Item 1", "item_1_value"), ("Item 2", "item_2_value"), None, ("Item 3", "item_3_value")]
 
 dropdown = Dropdown(label="Dropdown button", button_type="warning", menu=menu)
-#dropdown_split = Dropdown(label="Split button", button_type="danger", menu=menu, default_value="default"))
+dropdown_split = Dropdown(label="Split button", button_type="danger", menu=menu, split=True)
 
 checkbox_group = CheckboxGroup(labels=["Option 1", "Option 2", "Option 3"], active=[0, 1])
 radio_group = RadioGroup(labels=["Option 1", "Option 2", "Option 3"], active=0)
@@ -110,7 +110,7 @@ table = DataTable(source=source, columns=columns, editable=True, width=800)
 widgets = Column(children=[
     Row(children=[
         column([
-            button, toggle, dropdown, #dropdown_split,
+            button, toggle, dropdown, dropdown_split,
             checkbox_group, radio_group,
             checkbox_button_group, radio_button_group,
         ], spacing=5),
