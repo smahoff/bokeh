@@ -63,13 +63,13 @@ export function gridplot(children: (LayoutDOM | null)[][], opts: GridPlotOpts = 
 
   switch (toolbar_location) {
     case "above":
-      return new Column({children: [toolbar, grid], sizing_mode})
+      return new Column({children: [toolbar, grid], rows: {0: "min"}, spacing: 0, sizing_mode})
     case "below":
-      return new Column({children: [grid, toolbar], sizing_mode})
+      return new Column({children: [grid, toolbar], rows: {1: "min"}, spacing: 0, sizing_mode})
     case "left":
-      return new Row({children: [toolbar, grid], sizing_mode})
+      return new Row({children: [toolbar, grid], cols: {0: "min"}, spacing: 0, sizing_mode})
     case "right":
-      return new Row({children: [grid, toolbar], sizing_mode})
+      return new Row({children: [grid, toolbar], cols: {1: "min"}, spacing: 0, sizing_mode})
     default:
       throw new Error("unexpected")
   }

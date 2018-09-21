@@ -113,16 +113,16 @@ widgets = Column(children=[
             button, toggle, dropdown, dropdown_split,
             checkbox_group, radio_group,
             checkbox_button_group, radio_button_group,
-        ], spacing=5),
+        ]),
         column([
             text_input, autocomplete_input,
             select, multi_select,
             slider, range_slider, #date_range_slider,
             date_picker,
             paragraph, div, pre_text,
-        ], spacing=5),
+        ]),
         tabs,
-    ], spacing=10),
+    ]),
     table,
 ])
 

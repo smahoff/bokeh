@@ -47,7 +47,7 @@ export abstract class Box extends LayoutDOM {
 
     this.define({
       children: [ p.Array,  [] ],
-      spacing:  [ p.Number, 0  ],
+      spacing:  [ p.Number, 5  ],
     })
   }
 }

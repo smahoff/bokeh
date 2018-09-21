@@ -165,7 +165,7 @@ class Box(LayoutDOM):
     The list of children, which can be other components including plots, rows, columns, and widgets.
     """)
 
-    spacing = Int(default=0, help="""
+    spacing = Int(default=5, help="""
     """)
 
 
